@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>データ管理アプリケーション - テスト検証用</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>データ管理アプリケーション</h1>
+            <p class="subtitle">テスト自動化検証用サンプルサイト</p>
+        </header>
+
+        <main>
+            <!-- データ入力フォーム -->
+            <section class="form-section">
+                <h2>データ登録フォーム</h2>
+                <form id="dataForm">
+                    <div class="form-group">
+                        <label for="name">名前 <span class="required">*</span></label>
+                        <input type="text" id="name" name="name" required
+                               placeholder="例: 山田太郎"
+                               aria-label="名前（必須）">
+                        <span class="error-message" id="nameError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">メールアドレス <span class="required">*</span></label>
+                        <input type="email" id="email" name="email" required
+                               placeholder="例: example@example.com"
+                               aria-label="メールアドレス（必須）">
+                        <span class="error-message" id="emailError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="age">年齢 <span class="required">*</span></label>
+                        <input type="number" id="age" name="age" required
+                               min="0" max="150" step="1"
+                               placeholder="例: 30"
+                               aria-label="年齢（必須）">
+                        <span class="error-message" id="ageError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="department">部署</label>
+                        <select id="department" name="department" aria-label="部署">
+                            <option value="">選択してください</option>
+                            <option value="開発">開発</option>
+                            <option value="営業">営業</option>
+                            <option value="人事">人事</option>
+                            <option value="総務">総務</option>
+                            <option value="経理">経理</option>
+                        </select>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="submit" id="submitBtn" class="btn btn-primary">追加</button>
+                        <button type="button" id="resetBtn" class="btn btn-secondary">クリア</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- データ表示セクション -->
+            <section class="table-section">
+                <div class="table-header">
+                    <h2>登録データ一覧</h2>
+                    <div class="table-info">
+                        <span id="totalCount">全 0 件</span>
+                    </div>
+                </div>
+
+                <!-- データ0件時のメッセージ -->
+                <div id="emptyMessage" class="empty-message">
+                    <p>データがありません</p>
+                    <p class="empty-hint">上記のフォームからデータを追加してください</p>
+                </div>
+
+                <!-- データテーブル -->
+                <div id="tableContainer" class="table-container" style="display: none;">
+                    <table id="dataTable">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>名前</th>
+                                <th>メールアドレス</th>
+                                <th>年齢</th>
+                                <th>部署</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <!-- データ行が動的に追加されます -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- ページングコントロール -->
+                <div id="pagination" class="pagination" style="display: none;">
+                    <button id="firstPageBtn" class="btn-page" aria-label="最初のページ">≪</button>
+                    <button id="prevPageBtn" class="btn-page" aria-label="前のページ">＜</button>
+                    <span id="pageInfo" class="page-info">1 / 1</span>
+                    <button id="nextPageBtn" class="btn-page" aria-label="次のページ">＞</button>
+                    <button id="lastPageBtn" class="btn-page" aria-label="最後のページ">≫</button>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>ブラウザ自動化テストツール検証用サンプルアプリケーション</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

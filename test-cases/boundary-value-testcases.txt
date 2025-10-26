@@ -1,5 +1,39 @@
 # 境界値テストケース
 
+## 実行ガイドライン
+
+### 出力ディレクトリ構造
+テスト実行時は、以下の構造でタイムスタンプ付きフォルダを作成すること：
+
+```
+test-results/
+  └── YYYYMMDD_HHMMSS/  # 例: 20251026_071030
+      ├── performance/
+      │   └── performance-metrics.json
+      ├── reports/
+      │   ├── boundary-value-test-report.json
+      │   └── test-execution-summary.md
+      └── screenshots/
+          └── *.png
+```
+
+### 実行フロー
+1. テスト開始時にタイムスタンプフォルダを生成（フォーマット: YYYYMMDD_HHMMSS）
+2. performance、reports、screenshots の各サブディレクトリを作成
+3. 各テスト結果を保存（スクリーンショットは一時的に test-results/screenshots/ に保存される）
+4. テスト完了後、以下のファイル整理を実行：
+   - test-results/screenshots/*.png を test-results/YYYYMMDD_HHMMSS/screenshots/ に移動
+   - test-results/screenshots/ ディレクトリが空になったら削除（オプション）
+5. （オプション）最新実行へのシンボリックリンク（latest）を作成
+
+### 出力ファイル
+- `performance/performance-metrics.json`: パフォーマンス測定結果（Core Web Vitals、LCP breakdown、ネットワークリクエスト等）
+- `reports/boundary-value-test-report.json`: 境界値テストケースの詳細実行結果
+- `reports/test-execution-summary.md`: 人間が読みやすいMarkdown形式のサマリーレポート
+- `screenshots/*.png`: 各テストケースのスクリーンショット
+
+---
+
 ## 対象URL
 http://127.0.0.1:5500/sample-site/index.html
 
@@ -314,4 +348,26 @@ async function addMultipleData(page, count, waitTime = 200) {
 
 ---
 
-最終更新: 2025年10月25日
+## テスト実行後のファイル整理コマンド
+
+テスト実行完了後、以下のコマンドを実行してファイルを整理すること：
+
+```bash
+# 1. スクリーンショットをタイムスタンプフォルダに移動
+mv test-results/screenshots/*.png test-results/YYYYMMDD_HHMMSS/screenshots/
+
+# 2. test-results直下のscreenshotsディレクトリを削除（空の場合のみ）
+rmdir test-results/screenshots/
+
+# 3. （オプション）最終的なディレクトリ構造を確認
+tree test-results/YYYYMMDD_HHMMSS/
+```
+
+**注意事項:**
+- `YYYYMMDD_HHMMSS` は実際のタイムスタンプに置き換えること
+- スクリーンショットの移動は必須。移動しないと、次回実行時に古いスクリーンショットが残る
+- test-results/screenshots/ が空になったら削除して、ディレクトリ構造を清潔に保つこと
+
+---
+
+最終更新: 2025年10月26日
